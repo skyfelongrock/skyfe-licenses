@@ -1,0 +1,61 @@
+name: Skyfe - Cihaz Yonetimi
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Ilk kurulum yalniz bir kez; daha sonra cihaz ekle/kaldir'
+        type: choice
+        required: true
+        default: 'Listeyi yenile'
+        options:
+          - Ilk kurulum
+          - Cihaz ekle
+          - Cihaz kaldir
+          - Listeyi yenile
+      device_code:
+        description: 'Cihaz ekle/kaldir icin EXEden kopyalanan TAM Device Code'
+        type: string
+        required: false
+        default: ''
+  schedule:
+    # UTC. Refresh the 7-day signed manifest daily; this is not a customer/device expiry.
+    - cron: '17 5 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skyfe-license-writer
+  cancel-in-progress: false
+
+jobs:
+  manage:
+    if: >-
+      github.repository == 'skyfelongrock/skyfe-licenses' &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Read the default branch
+        # Official actions/checkout v4.2.2, pinned instead of a mutable tag.
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
+          fetch-depth: 1
+
+      - name: Test signing and validation (no secrets)
+        run: node --test scripts/license-core.test.mjs
+
+      - name: Apply operation and publish signed list
+        env:
+          SKYFE_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          SKYFE_ACTION: ${{ github.event_name == 'schedule' && 'Listeyi yenile' || inputs.operation }}
+          SKYFE_DEVICE_CODE: ${{ inputs.device_code }}
+          SKYFE_SIGNING_SEED: ${{ secrets.SKYFE_SIGNING_SEED }}
+          # Only initialization receives the temporary token. Daily management does not need a PAT.
+          SKYFE_SETUP_TOKEN: ${{ inputs.operation == 'Ilk kurulum' && secrets.SKYFE_SETUP_TOKEN || '' }}
+        run: node scripts/license-admin.mjs
