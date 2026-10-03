@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "algorithm": "Ed25519",
+  "key_id": "c2fc6c26164c10ea78539086393a4f7b",
+  "payload": "eyJzY2hlbWEiOjEsInByb2R1Y3QiOiJza3lmZS1ib3NzLXRpbWVyIiwicmVwb3NpdG9yeSI6InNreWZlbG9uZ3JvY2svc2t5ZmUtbGljZW5zZXMiLCJyZXZpc2lvbiI6MSwiaXNzdWVkX2F0IjoxNzkxMDMwNjM3LCJ2YWxpZF91bnRpbCI6MTc5MTYzNTQzNywibWluX2FwcF92ZXJzaW9uIjoiMS4xLjAiLCJkZXZpY2VzIjpbXX0",
+  "signature": "Sq03te2bXAA_FDHNzCSea6FpHmhxm6U_-hhKzUjY0fZRgGbcliEBO97akqOHpBKpI8XmLtjVQCbCl3MX1WgRAg"
+}

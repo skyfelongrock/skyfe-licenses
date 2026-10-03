@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "product": "skyfe-boss-timer",
+  "repository": "skyfelongrock/skyfe-licenses",
+  "branch": "master",
+  "manifest_url": "https://raw.githubusercontent.com/skyfelongrock/skyfe-licenses/master/published/devices.signed.json",
+  "public_key": "lsqteAH-zoHmDKCoRWLU_QRXScvTPaXYXjxeSVTc1mI",
+  "key_id": "c2fc6c26164c10ea78539086393a4f7b",
+  "signature_domain": "SKYFE-DEVICE-LIST-V1\n",
+  "min_app_version": "1.1.0",
+  "pending_poll_seconds": 30,
+  "active_poll_seconds": 300
+}
