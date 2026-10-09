@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": 12,
+  "revision": 13,
   "min_app_version": "1.1.0",
   "devices": [
     "6b7f0f4cddb87ec66ee2e7207fa5b6e8a7abf8c003fe943aec9f5aaeb8b68720"
